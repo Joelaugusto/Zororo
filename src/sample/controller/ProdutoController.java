@@ -3,6 +3,8 @@ package sample.controller;
 import sample.model.DB.Persistencia;
 import sample.model.modelo.Produto;
 
+import java.util.ArrayList;
+
 
 public class ProdutoController {
 
@@ -18,6 +20,15 @@ public class ProdutoController {
     public void excluirProduto(int id){
 
     }
+
+    public boolean verificarExistencia(){
+        return false;
+    }
+    
+    public Produto getProduto(int id){
+        return Persistencia.sessao().find(Produto.class, id);
+    }
+
 
 
 

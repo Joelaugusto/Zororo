@@ -16,41 +16,44 @@ import java.util.ResourceBundle;
 
 public class RegistroController implements Initializable {
 
-        @FXML
-        private ResourceBundle resources;
+    @FXML
+    private ResourceBundle resources;
 
-        @FXML
-        private URL location;
+    @FXML
+    private URL location;
 
-        @FXML
-        private JFXTextField nomeProduto;
+    @FXML
+    private JFXTextField nomeProduto;
 
-        @FXML
-        private JFXTextField preco;
+    @FXML
+    private JFXTextField preco;
 
-        @FXML
-        private JFXTextField quantidade;
+    @FXML
+    private JFXTextField quantidade;
 
-        @FXML
-        private JFXButton btnRegistro;
+    @FXML
+    private JFXButton btnRegistro;
 
-        @FXML
-        private JFXTextField precoCaixa;
+    @FXML
+    private JFXTextField precoCaixa;
 
-        @FXML
-        private Label lblLucro;
+    @FXML
+    private Label lblLucro;
 
-        @FXML
-        private JFXComboBox<?> categoria;
+    @FXML
+    private JFXComboBox<?> categoria;
+
+    @FXML
+    private Label notificacao;
+
+    @FXML
+    void initialize() {
+
+    }
 
         private boolean camposNumeroValidos = false;
         private  ProdutoController pc;
 
-        @FXML
-        void initialize() {
-
-
-        }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,7 +67,7 @@ public class RegistroController implements Initializable {
     }
 
     public RegistroController(){
-        pc = new ProdutoController();
+            pc = new ProdutoController();
     }
 
     public void registrarProduto(){
@@ -75,7 +78,9 @@ public class RegistroController implements Initializable {
         p.setValor(Float.parseFloat(preco.getText()));
         p.setUnidadesPorCaixa(Short.parseShort(quantidade.getText()));
         pc.registrarProduto(p);
+        System.out.println(pc.getProduto(18));
     }
+
 
     private void setLucro(){
                 int quant;
@@ -135,13 +140,17 @@ public class RegistroController implements Initializable {
     }
 
     private void validarNomeProduto(){
-        if(this.nomeProduto.getText().equals(null) || this.nomeProduto.getText().equals("")){
+        if(this.nomeProduto.getText().equals(null) || this.nomeProduto.getText().equals("")|| pc.verificarExistencia()){
             campoValidado(false, this.nomeProduto);
             btnRegistro.setDisable(true);
+            notificacao.setText("O Produto já existe!");
         }else{
             campoValidado(true, this.nomeProduto);
             if(camposNumeroValidos){
                 btnRegistro.setDisable(false);
+            }
+            if(!pc.verificarExistencia()){
+                notificacao.setText("");
             }
         }
     }
@@ -153,4 +162,5 @@ public class RegistroController implements Initializable {
             txt.setStyle("-fx-text-inner-color: red");
         }
     }
+
 }

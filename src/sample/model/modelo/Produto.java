@@ -4,12 +4,28 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "produto")
+@Table  (name = "produto",
+        uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "nome"
+        }
+))
 public class Produto {
+
+    @Column(length = 30, nullable = false, name = "nome")
     private String nome;
+
+    @Column(name = "preco", nullable = false)
     private float valor;
+
+    @Column(name = "precoCaixa", nullable = false)
     private float precoCaixa;
+
+    @Column(name = "unidadesCaixa", nullable = false)
     private short unidadesPorCaixa;
+
+    @Id
+    @GeneratedValue
     private int id;
 
     public Produto(String nome, float valor, float precoCaixa, short unidadesPorCaixa) {
@@ -24,8 +40,6 @@ public class Produto {
         super();
     }
 
-    @Id
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -34,7 +48,6 @@ public class Produto {
         this.id = id;
     }
 
-    @Column(length = 30, nullable = false, name = "nome")
     public String getNome() {
         return nome;
     }
@@ -43,7 +56,6 @@ public class Produto {
         this.nome = nome;
     }
 
-    @Column(name = "preco", nullable = false)
     public float getValor() {
         return valor;
     }
@@ -52,7 +64,6 @@ public class Produto {
         this.valor = valor;
     }
 
-    @Column(name = "precoCaixa", nullable = false)
     public float getPrecoCaixa() {
         return precoCaixa;
     }
@@ -61,7 +72,6 @@ public class Produto {
         this.precoCaixa = precoCaixa;
     }
 
-    @Column(name = "unidadesCaixa", nullable = false)
     public short getUnidadesPorCaixa() {
         return unidadesPorCaixa;
     }

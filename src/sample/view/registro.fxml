@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="774.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RegistroController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="774.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RegistroController">
    <children>
       <Label layoutX="209.0" layoutY="80.0" prefHeight="37.0" prefWidth="315.0" text="Registrar Novo Produto" textFill="#4d4d4d">
          <font>
@@ -41,7 +41,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </JFXTextField>
-      <JFXButton fx:id="btnRegistro" layoutX="299.0" layoutY="398.0" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #EBECF0;" text="Registrar" textFill="#0052cc">
+      <JFXButton fx:id="btnRegistro" layoutX="299.0" layoutY="421.0" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #EBECF0;" text="Registrar" textFill="#0052cc">
          <font>
             <Font name="Segoe UI" size="20.0" />
          </font>
@@ -91,6 +91,16 @@
       <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="539.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons/category.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="notificacao" layoutX="584.0" layoutY="354.0" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: #fff;" textFill="#e43434">
+         <font>
+            <Font name="Segoe UI" size="15.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="539.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/icons/icons8_error_24px.png" />
          </image>
       </ImageView>
    </children>
