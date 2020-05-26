@@ -1,12 +1,15 @@
 package sample.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import sample.model.modelo.Produto;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -37,7 +40,11 @@ public class RegistroController implements Initializable {
         @FXML
         private Label lblLucro;
 
+        @FXML
+        private JFXComboBox<?> categoria;
+
         private boolean camposNumeroValidos = false;
+        private  ProdutoController pc;
 
         @FXML
         void initialize() {
@@ -56,8 +63,18 @@ public class RegistroController implements Initializable {
 
     }
 
+    public RegistroController(){
+        pc = new ProdutoController();
+    }
+
     public void registrarProduto(){
-        System.out.println("vai registrar");
+
+        Produto p = new Produto();
+        p.setNome(nomeProduto.getText());
+        p.setPrecoCaixa(Float.parseFloat(precoCaixa.getText()));
+        p.setValor(Float.parseFloat(preco.getText()));
+        p.setUnidadesPorCaixa(Short.parseShort(quantidade.getText()));
+        pc.registrarProduto(p);
     }
 
     private void setLucro(){

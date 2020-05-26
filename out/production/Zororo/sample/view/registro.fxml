@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
@@ -84,6 +85,12 @@
       <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="539.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons/icons8_profit_24px.png" />
+         </image>
+      </ImageView>
+      <JFXComboBox fx:id="categoria" labelFloat="true" layoutX="584.0" layoutY="128.0" prefHeight="35.0" prefWidth="129.0" promptText="Categoria" style="-fx-background-color: #fff;" />
+      <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="539.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/icons/category.png" />
          </image>
       </ImageView>
    </children>

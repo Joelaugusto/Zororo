@@ -63,4 +63,20 @@ public class LevantamentoController implements Initializable {
     private void preencherCB(){
 
     }
+
+    private void atualizarStock(){
+        if(rbAdicionarUnidade.isSelected()){
+           adicionarPorUnidade();
+        }else{
+            adicicionarPorCaixa();
+        }
+    }
+
+    private void adicionarPorUnidade(){
+
+    }
+
+    private void adicicionarPorCaixa(){
+
+    }
 }
