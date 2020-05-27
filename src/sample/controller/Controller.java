@@ -123,6 +123,7 @@ public class Controller implements Initializable {
             System.out.println("Nulo");
         }catch (IOException e) {
             System.out.println("Erro de leitura");
+            e.printStackTrace();
         }
     }
 }

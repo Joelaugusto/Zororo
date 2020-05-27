@@ -1,10 +1,12 @@
 package sample.controller;
 
 import com.jfoenix.controls.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import sample.model.modelo.Produto;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +31,7 @@ public class LevantamentoController implements Initializable {
     private Label lblPreco;
 
     @FXML
-    private JFXComboBox<?> cbListaProdutos;
+    private JFXComboBox<Produto> cbListaProdutos;
 
     @FXML
     private JFXCheckBox ckbRemoverDepoisAtualizacao;
@@ -40,6 +42,8 @@ public class LevantamentoController implements Initializable {
     @FXML
     private JFXRadioButton rbAdicionarCaixa;
 
+    private  ProdutoController pc;
+
     @FXML
     void initialize() {
 
@@ -47,10 +51,12 @@ public class LevantamentoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        pc = new ProdutoController();
         preencherCB();
         rbAdicionarUnidade.setSelected(true);
         rbAdicionarCaixa.setOnAction(e->ativarDesativarRb(e));
         rbAdicionarUnidade.setOnAction(e->ativarDesativarRb(e));
+
     }
 
     private void ativarDesativarRb(ActionEvent e){
@@ -61,7 +67,7 @@ public class LevantamentoController implements Initializable {
         }
     }
     private void preencherCB(){
-
+        cbListaProdutos.setItems(pc.getAllNomeProduto());
     }
 
     private void atualizarStock(){

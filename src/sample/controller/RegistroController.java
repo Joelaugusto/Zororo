@@ -3,11 +3,13 @@ package sample.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+
 import sample.model.modelo.Produto;
 
 import java.net.URL;
@@ -63,6 +65,7 @@ public class RegistroController implements Initializable {
         btnRegistro.setOnAction(e->registrarProduto());
         nomeProduto.setOnKeyReleased(e->validarNomeProduto());
         btnRegistro.setDisable(true);
+        preencherCB();
 
     }
 
@@ -78,9 +81,7 @@ public class RegistroController implements Initializable {
         p.setValor(Float.parseFloat(preco.getText()));
         p.setUnidadesPorCaixa(Short.parseShort(quantidade.getText()));
         pc.registrarProduto(p);
-        System.out.println(pc.getProduto(18));
     }
-
 
     private void setLucro(){
                 int quant;
@@ -140,16 +141,21 @@ public class RegistroController implements Initializable {
     }
 
     private void validarNomeProduto(){
-        if(this.nomeProduto.getText().equals(null) || this.nomeProduto.getText().equals("")|| pc.verificarExistencia()){
+        if(this.nomeProduto.getText().equals(null) || this.nomeProduto.getText().equals("")||
+                pc.verificarExistencia(nomeProduto.getText())){
+
             campoValidado(false, this.nomeProduto);
             btnRegistro.setDisable(true);
-            notificacao.setText("O Produto já existe!");
+
+            if(!this.nomeProduto.getText().equals(null) & !this.nomeProduto.getText().equals("")){
+                notificacao.setText("O Produto já existe!");
+            }
         }else{
             campoValidado(true, this.nomeProduto);
             if(camposNumeroValidos){
                 btnRegistro.setDisable(false);
             }
-            if(!pc.verificarExistencia()){
+            if(!pc.verificarExistencia(nomeProduto.getText())){
                 notificacao.setText("");
             }
         }
@@ -163,4 +169,7 @@ public class RegistroController implements Initializable {
         }
     }
 
+    private void preencherCB() {
+        //categoria.setItems(pc.getAllNomeProduto());
+    }
 }
