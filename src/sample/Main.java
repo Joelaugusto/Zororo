@@ -14,13 +14,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
         primaryStage.setTitle("Zororo");
-        primaryStage.setScene(new Scene(root, 1024, 500));
+        primaryStage.setScene(new Scene(root, 1124, 540));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) {
-        Persistence.createEntityManagerFactory("Zororo");
         launch(args);
     }
 }

@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
+import sample.model.modelo.Categoria;
 import sample.model.modelo.Produto;
 
 import java.net.URL;
@@ -54,7 +55,8 @@ public class RegistroController implements Initializable {
     }
 
         private boolean camposNumeroValidos = false;
-        private  ProdutoController pc;
+        final private ProdutoController pc;
+        final private CategoriaController cc;
 
 
     @Override
@@ -64,13 +66,16 @@ public class RegistroController implements Initializable {
         quantidade.setOnKeyReleased(e->tfEvent(e));
         btnRegistro.setOnAction(e->registrarProduto());
         nomeProduto.setOnKeyReleased(e->validarNomeProduto());
+        //categoria.setOnAction(e->validarCategoria());
         btnRegistro.setDisable(true);
         preencherCB();
+        categoria.getSelectionModel().selectFirst();
 
     }
 
     public RegistroController(){
             pc = new ProdutoController();
+            cc = new CategoriaController();
     }
 
     public void registrarProduto(){
@@ -80,6 +85,11 @@ public class RegistroController implements Initializable {
         p.setPrecoCaixa(Float.parseFloat(precoCaixa.getText()));
         p.setValor(Float.parseFloat(preco.getText()));
         p.setUnidadesPorCaixa(Short.parseShort(quantidade.getText()));
+
+        Categoria c = cc.findByName(categoria.getSelectionModel().getSelectedItem().toString());
+        p.setCategoria(c);
+
+        System.out.println(p );
         pc.registrarProduto(p);
     }
 
@@ -106,7 +116,8 @@ public class RegistroController implements Initializable {
     }
 
     private float calcularLucro(float preco, float precoCaixa, int quantidade){
-                return preco*quantidade-precoCaixa;
+
+        return preco*quantidade-precoCaixa;
     }
 
     private void labelColor(boolean color){
@@ -163,13 +174,24 @@ public class RegistroController implements Initializable {
 
     private void campoValidado(boolean x, JFXTextField txt){
         if(x){
-            txt.setStyle("-fx-text-inner-color: green");
+            txt.setStyle("-jfx-focus-color: green;-fx-text-inner-color: green");
         }else{
-            txt.setStyle("-fx-text-inner-color: red");
+            txt.setStyle("-jfx-focus-color: red;-fx-text-inner-color: red");
         }
     }
 
     private void preencherCB() {
-        //categoria.setItems(pc.getAllNomeProduto());
+        categoria.setItems(cc.getAllNomeCategoria());
     }
+
+   /* private void validarCategoria(){
+        if(categoria.getSelectionModel().getSelectedItem().equals(null)){
+            categoria.setStyle("-fx-text-inner-color: red");
+            btnRegistro.setDisable(true);
+        }else{
+            categoria.setStyle("-fx-text-inner-color: green");
+            btnRegistro.setDisable(false);
+        }
+    }*/
+
 }

@@ -1,13 +1,16 @@
 package sample.model.modelo;
 
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table  (name = "produto",
         uniqueConstraints = @UniqueConstraint(
+                name = "uk_nome_cotegoria",
         columnNames = {
-                "nome"
+                "nome",
+                "categoria_id"
         }
 ))
 public class Produto {
@@ -24,16 +27,27 @@ public class Produto {
     @Column(name = "unidadesCaixa", nullable = false)
     private short unidadesPorCaixa;
 
+    @Column(name = "stock", nullable = false, columnDefinition = "int default 0")
+    private int stock;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "categoria_id",
+            foreignKey = @ForeignKey(name = "fk_categoria_id")
+    )
+    private Categoria categoria;
+
     @Id
     @GeneratedValue
     private int id;
 
-    public Produto(String nome, float valor, float precoCaixa, short unidadesPorCaixa) {
+    public Produto(String nome, float valor, float precoCaixa, short unidadesPorCaixa, int stock) {
         super();
         this.nome = nome;
         this.valor = valor;
         this.precoCaixa = precoCaixa;
         this.unidadesPorCaixa = unidadesPorCaixa;
+        this.stock = stock;
     }
 
     public Produto(){
@@ -80,6 +94,22 @@ public class Produto {
         this.unidadesPorCaixa = unidadesPorCaixa;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,6 +133,8 @@ public class Produto {
                 ", valor=" + valor +
                 ", precoCaixa=" + precoCaixa +
                 ", unidadesPorCaixa=" + unidadesPorCaixa +
+                ", categoria=" + categoria +
+                ", id=" + id +
                 '}';
     }
 }

@@ -2,48 +2,53 @@ package sample.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.model.DB.Persistencia;
+import sample.model.DAO.ProdutoDAO;
 import sample.model.modelo.Produto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class ProdutoController {
 
-    ProdutoController(){
+    ProdutoDAO produtoDAO;
 
+    ProdutoController(){
+        produtoDAO = new ProdutoDAO();
     }
 
-    public void registrarProduto(Produto p){
-        Persistencia.sessao().save(p);
-        Persistencia.sessao().beginTransaction().commit();
+    public void registrarProduto(Produto produto){
+        System.out.println(produto);
+        produtoDAO.save(produto);
     }
 
     public void excluirProduto(int id){
-
+        produtoDAO.remove(id);
     }
 
     public boolean verificarExistencia(String nome){
-        List<Produto> list = Persistencia.sessao().createQuery("select nome from Produto" +
-                " where nome ='"+nome+"'").list();
-        return !list.isEmpty(); // se a lista estiver vazia significa que nao ha nenhum registro com mesmo nome
+        return !produtoDAO.findByName(nome).isEmpty();
+        // se a lista estiver vazia significa que nao ha nenhum registro com mesmo nome
     }
     
     public Produto getProduto(int id){
-        return Persistencia.sessao().find(Produto.class, id);
+        return produtoDAO.findById(id);
     }
 
     public ObservableList getAllProduto(){
-        List<Produto> list = Persistencia.sessao().createQuery("from Produto").list();
-        ObservableList p = FXCollections.observableArrayList(list);
-        return p;
+        List<Produto> list = produtoDAO.findAll();
+        return FXCollections.observableArrayList(list);
     }
 
-    public ObservableList getAllNomeProduto(){
-        List<Produto> list = Persistencia.sessao().createQuery("select nome from Produto").list();
-        ObservableList p = FXCollections.observableArrayList(list);
-        return p;
+    public ObservableList findAllNomeProduto(){
+        return FXCollections.observableArrayList(produtoDAO.findAllNames());
+    }
+
+    public Produto getProduto(String nome){
+        return produtoDAO.findByName(nome).get(0);
+    }
+
+    public void update(Produto produto){
+        produtoDAO.update(produto);
     }
 
 
