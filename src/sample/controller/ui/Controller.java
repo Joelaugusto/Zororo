@@ -1,4 +1,4 @@
-package sample.controller;
+package sample.controller.ui;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -21,6 +21,9 @@ public class Controller implements Initializable {
 
     @FXML
     private URL location;
+
+    @FXML
+    private JFXButton btn_realizarVenda;
 
     @FXML
     private JFXButton btn_registrar;
@@ -66,6 +69,7 @@ public class Controller implements Initializable {
 
         btn_registrar.setOnAction(e->btnClique("/sample/view/registro.fxml",e));
         btn_levantamento.setOnAction(e->btnClique("/sample/view/levantamento.fxml",e));
+        btn_realizarVenda.setOnAction(e->btnClique("/sample/view/realizarVenda.fxml",e));
     }
 
     private void btnClique(String txt, ActionEvent e){
@@ -109,10 +113,12 @@ public class Controller implements Initializable {
         setUnselectedOption(this.btn_registrar);
         ivRegistro.setImage(new Image("sample/assets/icons/create2.png"));
         setUnselectedOption(this.btn_stock);
+        setUnselectedOption(this.btn_realizarVenda);
     }
 
     private void adicionarConteudoPainelVisualizar(String directorio){
         try {
+            pnl_visualizar.getChildren().clear();
             pnl_visualizar.getChildren().add((AnchorPane)FXMLLoader.load(getClass().getResource(directorio)));
         }catch (FileNotFoundException e) {
             System.out.println("Ficheiro não encontrado!");

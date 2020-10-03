@@ -78,9 +78,9 @@ public class Produto {
         this.valor = valor;
     }
 
-    public float getPrecoCaixa() {
+    /*public float getPrecoCaixa() {
         return precoCaixa;
-    }
+    }*/
 
     public void setPrecoCaixa(float precoCaixa) {
         this.precoCaixa = precoCaixa;
@@ -94,9 +94,9 @@ public class Produto {
         this.unidadesPorCaixa = unidadesPorCaixa;
     }
 
-    public Categoria getCategoria() {
+    /*public Categoria getCategoria() {
         return categoria;
-    }
+    }*/
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;

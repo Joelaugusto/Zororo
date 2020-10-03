@@ -6,14 +6,15 @@ public class Conversao {
         super();
     }
 
-    public boolean StringToDouble(String number){
+    /*public boolean StringToDouble(String number){
         try{
            Double.parseDouble(number);
         }catch (NumberFormatException e){
             return false; // ocorreu um erro durante a conversão.
         }
         return true;
-    }
+    }*/
+
 
     public boolean StringToInteger(String number){
         try{
@@ -24,10 +25,20 @@ public class Conversao {
         return true;
     }
 
-    public Integer StringToInt(String number){
+    public int StringToInt(String number){
         int x = 0;
         try{
             x = Integer.parseInt(number);
+        }catch (NumberFormatException e){
+            System.out.println(e.getMessage()); // ocorreu um erro durante a conversão.
+        }
+        return x;
+    }
+
+    public double StringToDoub(String number){
+        double x = 0;
+        try{
+            x = Double.parseDouble(number);
         }catch (NumberFormatException e){
             System.out.println(e.getMessage()); // ocorreu um erro durante a conversão.
         }

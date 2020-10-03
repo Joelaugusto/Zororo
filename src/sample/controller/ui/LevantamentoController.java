@@ -1,16 +1,15 @@
-package sample.controller;
+package sample.controller.ui;
 
 import com.jfoenix.controls.*;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import sample.controller.model.ProdutoController;
 import sample.model.modelo.Produto;
 import sample.util.Conversao;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,7 +30,7 @@ public class LevantamentoController implements Initializable {
     private Label lblNomeProduto;
 
     @FXML
-    private Label lblPreco;
+    private Label lblStock;
 
     @FXML
     private JFXComboBox<String> cbListaProdutos;
@@ -45,13 +44,12 @@ public class LevantamentoController implements Initializable {
     @FXML
     private JFXRadioButton rbAdicionarCaixa;
 
-    private  ProdutoController pc;
+    private ProdutoController pc;
     private Produto produto;
     private Conversao conversao;
 
     @FXML
     void initialize() {
-
     }
 
     @Override
@@ -62,13 +60,10 @@ public class LevantamentoController implements Initializable {
 
 
         preencherCB();
-        rbAdicionarUnidade.setSelected(true);
-        rbAdicionarCaixa.setOnAction(e->ativarDesativarRb(e));
-        rbAdicionarUnidade.setOnAction(e->ativarDesativarRb(e));
-        cbListaProdutos.setOnAction(e->selecionarProduto(e));
-        tfQuantidade.setOnKeyTyped(e->{
-            validarTF(e);
-        });
+        rbAdicionarCaixa.setOnAction(this::ativarDesativarRb);
+        rbAdicionarUnidade.setOnAction(this::ativarDesativarRb);
+        cbListaProdutos.setOnAction(e->selecionarProduto());
+        tfQuantidade.setOnKeyTyped(this::validarTF);
         btnAtualizarStock.setOnAction(e->atualizarStock());
         btnAtualizarStock.setDisable(true);
 
@@ -92,8 +87,10 @@ public class LevantamentoController implements Initializable {
     private void ativarDesativarRb(ActionEvent e){
         if(e.getSource().equals(this.rbAdicionarCaixa)){
             rbAdicionarUnidade.setSelected(false);
+            rbAdicionarCaixa.setSelected(true);
         }else{
             rbAdicionarCaixa.setSelected(false);
+            rbAdicionarUnidade.setSelected(true);
         }
     }
     private void preencherCB(){
@@ -102,7 +99,7 @@ public class LevantamentoController implements Initializable {
         preencherCampos();
     }
 
-    private void selecionarProduto(ActionEvent e){
+    private void selecionarProduto(){
         if(cbListaProdutos.getSelectionModel().isEmpty()){
             System.out.println("Nada a mostrar");//corrigir depois;
         }else{
@@ -114,7 +111,19 @@ public class LevantamentoController implements Initializable {
         String selected = cbListaProdutos.getSelectionModel().getSelectedItem();
         produto = pc.getProduto(selected);
         lblNomeProduto.setText(produto.getNome());
-        lblPreco.setText("Stock Existente : "+produto.getStock());
+
+
+        if(produto.getStock()%produto.getUnidadesPorCaixa()==0){
+            lblStock.setText("Stock : "+produto.getStock()/produto.getUnidadesPorCaixa() + " Caixas");
+        }else{
+            if(produto.getStock()<produto.getUnidadesPorCaixa()){
+                lblStock.setText("Stock : "+produto.getStock()+ " Unidades");
+            }else{
+               lblStock.setText("Stock : "+produto.getStock()/produto.getUnidadesPorCaixa()+
+                        " Caixas e "+produto.getStock()%produto.getUnidadesPorCaixa()+" Unidades");
+            }
+        }
+
     }
 
     private void atualizarStock(){

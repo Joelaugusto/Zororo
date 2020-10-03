@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.dataBase.ConnectionFactory;
 
 import javax.persistence.Persistence;
 
@@ -20,6 +21,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        new ConnectionFactory().getEntityManager();
         launch(args);
     }
 }

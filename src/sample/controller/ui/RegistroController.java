@@ -1,4 +1,4 @@
-package sample.controller;
+package sample.controller.ui;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
+import sample.controller.model.CategoriaController;
+import sample.controller.model.ProdutoController;
 import sample.model.modelo.Categoria;
 import sample.model.modelo.Produto;
 
@@ -81,37 +83,31 @@ public class RegistroController implements Initializable {
     public void registrarProduto(){
 
         Produto p = new Produto();
-        p.setNome(nomeProduto.getText());
+        p.setNome(nomeProduto.getText().toUpperCase());
         p.setPrecoCaixa(Float.parseFloat(precoCaixa.getText()));
         p.setValor(Float.parseFloat(preco.getText()));
         p.setUnidadesPorCaixa(Short.parseShort(quantidade.getText()));
 
         Categoria c = cc.findByName(categoria.getSelectionModel().getSelectedItem().toString());
         p.setCategoria(c);
-
-        System.out.println(p );
         pc.registrarProduto(p);
     }
 
     private void setLucro(){
-                int quant;
-                float price, priceCaixa;
+        int quant;
+        float price, priceCaixa;
 
-                try {
-                        quant = Integer.parseInt(quantidade.getText());
-                        price = Float.parseFloat(preco.getText());
-                        priceCaixa = Float.parseFloat(precoCaixa.getText());
-                        float lucro = calcularLucro(price,priceCaixa,quant);
-                        lblLucro.setText("Lucro : "+lucro+" MT");
-                        if(lucro>0){
-                                labelColor(true); //muda a cor do label dependendo do lucro
-                        }else{
-                                labelColor(false);
-                        }
+        try {
+            quant = Integer.parseInt(quantidade.getText());
+            price = Float.parseFloat(preco.getText());
+            priceCaixa = Float.parseFloat(precoCaixa.getText());
+            float lucro = calcularLucro(price,priceCaixa,quant);
+            lblLucro.setText("Lucro : "+lucro+" MT");
+            labelColor(lucro > 0); //muda a cor do label dependendo do lucro
                 }catch (NumberFormatException n){
-                        lblLucro.setText("Não Definido");
-                        labelColor(false);
-                }
+            lblLucro.setText("Não Definido");
+            labelColor(false);
+        }
 
     }
 
@@ -121,15 +117,15 @@ public class RegistroController implements Initializable {
     }
 
     private void labelColor(boolean color){
-                if (color){
-                        lblLucro.setTextFill(Color.web("#00f"));
-                        btnRegistro.setDisable(false);
-                        validarNomeProduto();
-                        camposNumeroValidos = true;
-                }else{
-                        lblLucro.setTextFill(Color.web("#f00"));
-                        btnRegistro.setDisable(true);
-                }
+        if (color){
+            lblLucro.setTextFill(Color.web("#00f"));
+            btnRegistro.setDisable(false);
+            validarNomeProduto();
+            camposNumeroValidos = true;
+        }else{
+            lblLucro.setTextFill(Color.web("#f00"));
+            btnRegistro.setDisable(true);
+        }
     }
 
     private void tfEvent(KeyEvent e){
@@ -173,6 +169,7 @@ public class RegistroController implements Initializable {
     }
 
     private void campoValidado(boolean x, JFXTextField txt){
+
         if(x){
             txt.setStyle("-jfx-focus-color: green;-fx-text-inner-color: green");
         }else{

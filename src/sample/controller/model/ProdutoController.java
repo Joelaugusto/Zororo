@@ -1,4 +1,4 @@
-package sample.controller;
+package sample.controller.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +12,7 @@ public class ProdutoController {
 
     ProdutoDAO produtoDAO;
 
-    ProdutoController(){
+    public ProdutoController(){
         produtoDAO = new ProdutoDAO();
     }
 

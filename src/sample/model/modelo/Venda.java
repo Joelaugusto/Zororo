@@ -1,7 +1,9 @@
 package sample.model.modelo;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
-import java.util.Calendar;
+import java.util.Date;
 
 
 
@@ -14,7 +16,8 @@ public class Venda {
     private long id;
 
     @Column(name = "dataVenda", nullable = false)
-    private Calendar data;
+    @CreationTimestamp
+    private final Date data;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -23,51 +26,70 @@ public class Venda {
     )
     private Produto produto;
 
-    @Column(name = "quantidadeVendida", nullable = false)
-    private int quantidadeVendida;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "id_factura",
+            foreignKey = @ForeignKey(name = "fk_id_factura")
+    )
+    private final Factura factura;
 
-    public Venda(long id, Calendar data,Produto produto, int quantidadeVendida) {
-        this.id = id;
-        this.data = data;
+    @Column(name = "quantidadeVendida", nullable = false)
+    private final int quantidadeVendida;
+
+    public Venda(Produto produto,Factura factura, int quantidadeVendida) {
+        this.data = new Date();
         this.produto = produto;
+        this.factura = factura;
         this.quantidadeVendida = quantidadeVendida;
     }
 
     public  Venda(){
-        this(0,null,null,0);
+        this(null,null,0);
     }
 
     public long getId() {
         return id;
     }
 
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    /*public void setFactura(Factura factura) {
+        this.factura = factura;
+    }*/
+
     public void setId(long id) {
         this.id = id;
     }
 
-    public Calendar getData() {
+    /*public Date getData() {
         return data;
-    }
+    }*/
 
-    public void setData(Calendar data) {
+    /*public void setData(Date data) {
         this.data = data;
-    }
+    }*/
 
     public Produto getProduto() {
         return produto;
     }
 
-    public void setIdProduto(Produto produto) {
+    /*public void setIdProduto(Produto produto) {
         this.produto = produto;
-    }
+    }*/
 
     public int getQuantidadeVendida() {
         return quantidadeVendida;
     }
 
-    public void setQuantidadeVendida(int quantidadeVendida) {
+    /*public void setQuantidadeVendida(int quantidadeVendida) {
         this.quantidadeVendida = quantidadeVendida;
-    }
+    }*/
 
     @Override
     public String toString() {

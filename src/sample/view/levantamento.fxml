@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="520.0" prefWidth="980.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LevantamentoController">
+<AnchorPane prefHeight="520.0" prefWidth="980.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ui.LevantamentoController">
    <Label layoutX="302.0" layoutY="79.0" prefHeight="37.0" prefWidth="376.0" text="Adicionar Nova Mercadoria" textFill="#4d4d4d">
       <font>
          <Font name="Segoe UI" size="30.0" />
@@ -43,12 +43,12 @@
    <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="628.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../assets/icons/icons8_estimates_24px.png" />
    </ImageView>
-   <Label fx:id="lblNomeProduto" layoutX="152.0" layoutY="168.0" prefHeight="35.0" prefWidth="422.0" text="Produto: Laurentina Preta" textFill="#4d4d4d">
+   <Label fx:id="lblNomeProduto" layoutX="152.0" layoutY="168.0" prefHeight="35.0" prefWidth="422.0" textFill="#4d4d4d">
       <font>
          <Font name="Segoe UI" size="25.0" />
       </font>
    </Label>
-   <Label fx:id="lblPreco" layoutX="152.0" layoutY="244.0" prefHeight="35.0" prefWidth="422.0" text="Preco :  50.0 MT" textFill="#4d4d4d">
+   <Label fx:id="lblStock" layoutX="152.0" layoutY="244.0" prefHeight="35.0" prefWidth="422.0" textFill="#4d4d4d">
       <font>
          <Font name="Segoe UI" size="25.0" />
       </font>
@@ -59,14 +59,14 @@
          <Font name="Segoe UI" size="12.0" />
       </font>
    </JFXCheckBox>
-   <JFXRadioButton fx:id="rbAdicionarUnidade" layoutX="107.0" layoutY="330.0" selectedColor="#0052cc" text="Adicionar por unidade" unSelectedColor="#5a5a5a">
+   <JFXRadioButton fx:id="rbAdicionarUnidade" layoutX="302.0" layoutY="337.0" selectedColor="#0052cc" text="Adicionar por unidade" unSelectedColor="#5a5a5a">
       <font>
-         <Font size="14.0" />
+         <Font size="18.0" />
       </font>
    </JFXRadioButton>
-   <JFXRadioButton fx:id="rbAdicionarCaixa" layoutX="293.0" layoutY="332.0" selectedColor="#0052cc" text="Adicionar Caixas" unSelectedColor="#5a5a5a">
+   <JFXRadioButton fx:id="rbAdicionarCaixa" layoutX="107.0" layoutY="341.0" selected="true" selectedColor="#0052cc" text="Adicionar Caixas" unSelectedColor="#5a5a5a">
       <font>
-         <Font name="Segoe UI" size="14.0" />
+         <Font name="Segoe UI" size="18.0" />
       </font>
    </JFXRadioButton>
 </AnchorPane>

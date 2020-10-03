@@ -2,41 +2,27 @@ package sample.model.DAO;
 
 import sample.dataBase.ConnectionFactory;
 import sample.model.modelo.Produto;
-import sample.model.modelo.Produto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class ProdutoDAO {
 
-    public void save (Produto produto){
-        EntityManager entityManager = new ConnectionFactory().getEntityManager();
+    private final MainDAO mainDAO= new MainDAO();
 
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.persist(produto);
-            entityManager.getTransaction().commit();
-        }catch(Exception e){
-            entityManager.getTransaction().rollback();
-            System.out.println(e.getMessage());
-        }finally {
-            entityManager.close();
-        }
+    public void save (Produto produto){
+
+        mainDAO.save(produto);
     }
 
     public void update (Produto produto){
-        EntityManager entityManager = new ConnectionFactory().getEntityManager();
 
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.merge(produto);
-            entityManager.getTransaction().commit();
-        }catch(Exception e){
-            entityManager.getTransaction().rollback();
-            System.out.println(e.getMessage());
-        }finally {
-            entityManager.close();
-        }
+        mainDAO.update(produto);
+    }
+
+    public void subtrairStock(Produto produto, int produtoASubstituir){
+        produto.setStock(produto.getStock() - produtoASubstituir);
+        update(produto);
     }
 
     public Produto findById(int id){
