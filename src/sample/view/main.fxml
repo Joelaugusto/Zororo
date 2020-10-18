@@ -44,7 +44,7 @@
         <ImageView fitHeight="26.0" fitWidth="31.0" layoutX="38.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0">
             <Image url="@../assets/icons/support.png" />
         </ImageView>
-        <Label layoutX="64.0" layoutY="354.0" prefHeight="26.0" prefWidth="161.0" text="Supported by Joel Augusto" AnchorPane.bottomAnchor="20.0">
+        <Label layoutX="64.0" layoutY="354.0" prefHeight="26.0" prefWidth="161.0" text="Powered by Joel Augusto" AnchorPane.bottomAnchor="20.0">
             <font>
                 <Font name="Segoe UI" size="13.0" />
             </font>

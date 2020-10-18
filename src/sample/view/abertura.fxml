@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ui.AberturaController">
+   <children>
+      <Label fx:id="info" layoutX="53.0" layoutY="123.0" prefHeight="55.0" prefWidth="375.0" text="Aguarde... A Aplicacão está carregando!">
+         <font>
+            <Font name="Segoe UI" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

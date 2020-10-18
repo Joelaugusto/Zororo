@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CategoriaController {
 
-    private CategoriaDAO categoriaDAO;
+    private final CategoriaDAO categoriaDAO;
 
     public CategoriaController(){
         categoriaDAO = new CategoriaDAO();

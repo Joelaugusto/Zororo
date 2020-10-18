@@ -77,7 +77,10 @@ public class RealizarVendaController {
     @FXML
     private Label lbl_nomeProduto;
 
+    /*@FXML
+    private Label lbl_carrinho;
 
+*/
 
     private ProdutoController pc;
 

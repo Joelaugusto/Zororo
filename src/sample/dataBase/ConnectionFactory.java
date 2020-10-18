@@ -12,4 +12,5 @@ public class ConnectionFactory {
     public EntityManager getEntityManager(){
         return emf.createEntityManager();
     }
+
 }

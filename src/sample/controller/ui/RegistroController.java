@@ -14,6 +14,7 @@ import sample.controller.model.CategoriaController;
 import sample.controller.model.ProdutoController;
 import sample.model.modelo.Categoria;
 import sample.model.modelo.Produto;
+import sample.util.Conversao;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,6 +51,8 @@ public class RegistroController implements Initializable {
 
     @FXML
     private Label notificacao;
+
+    private final Conversao conversao = new Conversao();
 
     @FXML
     void initialize() {
@@ -129,15 +132,33 @@ public class RegistroController implements Initializable {
     }
 
     private void tfEvent(KeyEvent e){
+
+       /* System.out.println(e.getCharacter()+", , "+e.getCode().isKeypadKey()+", , "+e.getCode().name());
+        JFXTextField aux = (JFXTextField) e.getSource();
+
+        System.out.println(e.getText());
+
+        if(!e.getCode().isKeypadKey()){
+            System.out.println(e.getText().substring(0,aux.getText().length()-1));
+            aux.setText(e.getText().substring(0,aux.getText().length()-1));
+            System.out.println(aux.getText());
+        }*/
             setLucro();
+            /*if(conversao.StringToDouble(e.getText())){
+                campoValidado(true, (JFXTextField) e.getSource());
+            }else{
+                campoValidado(false, (JFXTextField) e.getSource());
+            }implementar esta instrução*/
+
             validarTextFieldNumero((JFXTextField) e.getSource());
+
     }
 
     private void validarTextFieldNumero(JFXTextField txt){
         float valor;
         try {
             valor = Float.parseFloat(txt.getText());
-            campoValidado(true, txt);
+
             if(valor<=0){
                 campoValidado(false,txt);
             }

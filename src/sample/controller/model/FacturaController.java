@@ -5,7 +5,7 @@ import sample.model.modelo.Factura;
 
 public class FacturaController {
 
-    private VendaDAO vendaDao;
+    private final VendaDAO vendaDao;
     FacturaController () {
         vendaDao = new VendaDAO();
     }

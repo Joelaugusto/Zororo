@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,12 +14,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private JFXButton btn_realizarVenda;
@@ -46,30 +39,13 @@ public class Controller implements Initializable {
     @FXML
     private ImageView ivLevantamento;
 
-    @FXML
-    private ImageView ivStock;
-
-    @FXML
-    private ImageView ivEstatistica;
-
-
-    @FXML
-    void mouseEntered(MouseEvent event) {
-
-    }
-
-    @FXML
-    void mouseExited(MouseEvent event) {
-        JFXButton btn = (JFXButton) event.getSource();
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         btn_registrar.setOnAction(e->btnClique("/sample/view/registro.fxml",e));
         btn_levantamento.setOnAction(e->btnClique("/sample/view/levantamento.fxml",e));
         btn_realizarVenda.setOnAction(e->btnClique("/sample/view/realizarVenda.fxml",e));
+        btn_stock.setOnAction(e->btnClique("/sample/view/vendasEfectuadas.fxml",e));
     }
 
     private void btnClique(String txt, ActionEvent e){
@@ -119,14 +95,12 @@ public class Controller implements Initializable {
     private void adicionarConteudoPainelVisualizar(String directorio){
         try {
             pnl_visualizar.getChildren().clear();
-            pnl_visualizar.getChildren().add((AnchorPane)FXMLLoader.load(getClass().getResource(directorio)));
+            pnl_visualizar.getChildren().add(FXMLLoader.load(getClass().getResource(directorio)));
         }catch (FileNotFoundException e) {
             System.out.println("Ficheiro não encontrado!");
         } catch (NullPointerException e) {
             System.out.println("Nulo");
-        }catch(javafx.fxml.LoadException e){
-            e.printStackTrace();
-        }catch (IOException e) {
+        } catch(IOException e){
             e.printStackTrace();
         }
     }

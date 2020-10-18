@@ -26,7 +26,7 @@
          <Cursor fx:constant="TEXT" />
       </cursor>
    </JFXTextField>
-   <JFXButton fx:id="btnAtualizarStock" layoutX="390.0" layoutY="419.0" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #EBECF0;" text="Atualizar Stock" textFill="#0052cc">
+   <JFXButton fx:id="btnAtualizarStock" buttonType="RAISED" layoutX="390.0" layoutY="419.0" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #EBECF0;" text="Atualizar Stock" textFill="#0052cc">
       <font>
          <Font name="Segoe UI" size="20.0" />
       </font>
@@ -53,11 +53,17 @@
          <Font name="Segoe UI" size="25.0" />
       </font>
    </Label>
-   <JFXComboBox fx:id="cbListaProdutos" labelFloat="true" layoutX="628.0" layoutY="173.0" prefHeight="25.0" prefWidth="190.0" promptText="Lista de Produtos" style="-fx-background-color: #fff;" />
+   <JFXComboBox fx:id="cbListaProdutos" labelFloat="true" layoutX="628.0" layoutY="173.0" prefHeight="25.0" prefWidth="190.0" promptText="Lista de Produtos" style="-fx-background-color: #fff;">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></JFXComboBox>
    <JFXCheckBox fx:id="ckbRemoverDepoisAtualizacao" checkedColor="#0052cc" layoutX="628.0" layoutY="225.0" text="Remover depois da atualizacao" textFill="#4d4d4d">
       <font>
          <Font name="Segoe UI" size="12.0" />
       </font>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
    </JFXCheckBox>
    <JFXRadioButton fx:id="rbAdicionarUnidade" layoutX="302.0" layoutY="337.0" selectedColor="#0052cc" text="Adicionar por unidade" unSelectedColor="#5a5a5a">
       <font>
@@ -69,4 +75,7 @@
          <Font name="Segoe UI" size="18.0" />
       </font>
    </JFXRadioButton>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
 </AnchorPane>

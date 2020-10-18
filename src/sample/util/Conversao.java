@@ -6,14 +6,14 @@ public class Conversao {
         super();
     }
 
-    /*public boolean StringToDouble(String number){
+    public boolean StringToDouble(String number){
         try{
            Double.parseDouble(number);
         }catch (NumberFormatException e){
             return false; // ocorreu um erro durante a conversão.
         }
         return true;
-    }*/
+    }
 
 
     public boolean StringToInteger(String number){
