@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Zororo.iml" filepath="$PROJECT_DIR$/Zororo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Zororo.iml" filepath="$PROJECT_DIR$/.idea/Zororo.iml" />
     </modules>
   </component>
 </project>

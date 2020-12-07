@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import sample.model.DAO.CategoriaDAO;
 import sample.model.modelo.Categoria;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaController {

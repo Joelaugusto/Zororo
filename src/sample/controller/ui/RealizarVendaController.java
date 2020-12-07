@@ -16,19 +16,19 @@ import javafx.scene.control.Label;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
 import sample.controller.model.ProdutoController;
+import sample.controller.model.UnidadeControleer;
 import sample.controller.model.VendaController;
 import sample.model.modelo.Factura;
 import sample.model.modelo.Produto;
+import sample.model.modelo.Unidade;
 import sample.model.modelo.Venda;
 import sample.util.Conversao;
+import sample.util.TextUtil;
 
 public class RealizarVendaController {
 
@@ -58,6 +58,9 @@ public class RealizarVendaController {
 
     @FXML
     private Label lbl_existencia_produto;
+
+    @FXML
+    private Label lbl_preco_esperado;
 
     @FXML
     private JFXTreeTableView<ProdutoTB> carrinho_pnl;
@@ -90,19 +93,24 @@ public class RealizarVendaController {
 
     private  Produto produto;
 
+    private final TextUtil textUtil = new TextUtil();
+
     private ObservableList<ProdutoTB> produtoTBs;
 
     private boolean nomeValidado = false, quantidadeValidado = false;
 
     private final VendaController vendaCOntroller = new VendaController();
+    private final UnidadeControleer unidadeControleer = new UnidadeControleer();
+
+    private Date pressedTime;
+    private long timeClicked;
 
 
     @FXML
     void initialize() {
         pc = new ProdutoController();
-        Factura factura = new Factura();
         ObservableList suggestion = pc.findAllNomeProduto();
-        carrinho = new ArrayList<Venda>();
+        carrinho = new ArrayList<>();
 
         conversao = new Conversao();
 
@@ -111,41 +119,39 @@ public class RealizarVendaController {
         rb_caixas.setSelected(true);
         concluirVenda.setOnAction(e->finalizarVenda());
 
+        tf_quantidades.textProperty().addListener(textUtil.apenasDigitoInt(tf_quantidades));
+
+       eventosTabela();
+
+
+        //primeira coluna para a tabela
         JFXTreeTableColumn<ProdutoTB, String> nomePD = new JFXTreeTableColumn<>("Nome");
         nomePD.setPrefWidth(150);
-        nomePD.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ProdutoTB, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ProdutoTB, String> param) {
-                return param.getValue().getValue().nome;
-            }
-        });
+        nomePD.setCellValueFactory(param -> param.getValue().getValue().nome);
 
+
+        //segunda coluna para a tabela
         JFXTreeTableColumn<ProdutoTB, String> quantPD = new JFXTreeTableColumn<>("Quantidade");
         quantPD.setPrefWidth(60);
-        quantPD.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ProdutoTB, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ProdutoTB, String> param) {
-                return param.getValue().getValue().quantidade;
-            }
-        });
+        quantPD.setCellValueFactory(param -> param.getValue().getValue().quantidade);
 
+
+        //terceira coluna para a tabela
         JFXTreeTableColumn<ProdutoTB, String> precoPD = new JFXTreeTableColumn<>("Preço");
         precoPD.setPrefWidth(60);
-        precoPD.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ProdutoTB, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ProdutoTB, String> param) {
-                return param.getValue().getValue().preco;
-            }
-        });
+        precoPD.setCellValueFactory(param -> param.getValue().getValue().preco);
 
 
+        //Lista de produtos a adicionar na tablea
         produtoTBs = FXCollections.observableArrayList();
 
-        TreeItem <ProdutoTB> root = new RecursiveTreeItem<ProdutoTB>(produtoTBs,RecursiveTreeObject::getChildren);
 
+        TreeItem <ProdutoTB> root = new RecursiveTreeItem<>(produtoTBs, RecursiveTreeObject::getChildren);
+
+        //tamanho da tabela
         carrinho_pnl.setMinSize(310,600);
 
-
+        //adicionar as colunas na tabela
         carrinho_pnl.getColumns().setAll(nomePD,quantPD,precoPD);
         carrinho_pnl.setRoot(root);
         carrinho_pnl.setShowRoot(false);
@@ -178,6 +184,7 @@ public class RealizarVendaController {
         StringProperty nome;
         StringProperty quantidade;
         StringProperty preco;
+
 
         public ProdutoTB (String nome, String quantidade, String preco){
             this.nome = new SimpleStringProperty(nome);
@@ -225,11 +232,26 @@ public class RealizarVendaController {
     }
 
     private void preencherLabel(){
+        lbl_preco_esperado.setText("");
+        lbl_preco_esperado.setText("");
         if(produto!=null){
+            Unidade unidade = unidadeControleer.getByProdutoId(produto.getId());
+
+            rb_units.setVisible(true);
+            if(unidade.isPermiteQuantidade()){
+                rb_caixas.setVisible(true);
+                rb_units.setText("Vender em unidades");
+            }else{
+                rb_caixas.setVisible(false);
+                rb_units.setText("Vender em "+unidade.getUnidade());
+                rb_units.setSelected(true);
+                rb_caixas.setSelected(false);
+            }
+
             int stock = 0; // stock que já foi adicionado no carrinho
-            for (int i = 0; i <produtoTBs.size() ; i++) {
-                if(produtoTBs.get(i).nome.getValue().equalsIgnoreCase(produto.getNome())){
-                    stock = produtoTBs.get(i).getQuantidade();
+            for (ProdutoTB produtoTB : produtoTBs) {
+                if (produtoTB.nome.getValue().equalsIgnoreCase(produto.getNome())) {
+                    stock = produtoTB.getQuantidade();
                 }
             }
             lbl_nomeProduto.setText("Produto : "+produto.getNome());
@@ -252,14 +274,16 @@ public class RealizarVendaController {
 
         if(nomeValidado){
             int stock = 0; // stock que já foi adicionado no carrinho
-            for (int i = 0; i <produtoTBs.size() ; i++) {
-                if(produtoTBs.get(i).nome.getValue().equalsIgnoreCase(produto.getNome())){
-                    stock = produtoTBs.get(i).getQuantidade();
+            for (ProdutoTB produtoTB : produtoTBs) {
+                if (produtoTB.nome.getValue().equalsIgnoreCase(produto.getNome())) {
+                    stock = produtoTB.getQuantidade();
                 }
             }
 
             if(conversao.StringToInteger(tf_quantidades.getText()) && conversao.StringToInt(tf_quantidades.getText())>0){
                 if(rb_caixas.isSelected()){
+                    lbl_preco_esperado.setText("Preco esperado: "+produto.getUnidadesPorCaixa()*produto.getValor()*
+                            conversao.StringToInt(tf_quantidades.getText()));
                     if(produto.getStock()>=conversao.StringToInt(tf_quantidades.getText())*produto.getUnidadesPorCaixa()+stock){
                         lbl_quantidade.setVisible(false);
                         tf_quantidades.setStyle("-jfx-focus-color: green;-fx-text-inner-color: green");
@@ -271,6 +295,8 @@ public class RealizarVendaController {
                         adicionarLista.setDisable(true);
                     }
                 }else{
+                    lbl_preco_esperado.setText("Preco esperado: "+produto.getValor()*
+                            conversao.StringToInt(tf_quantidades.getText()));
                     if(produto.getStock()>=conversao.StringToInt(tf_quantidades.getText())+stock){
                         lbl_quantidade.setVisible(false);
                         tf_quantidades.setStyle("-jfx-focus-color: green;-fx-text-inner-color: green");
@@ -292,8 +318,6 @@ public class RealizarVendaController {
         }
     }
 
-
-
     private void adicionarAoCarrinho(){
 
         produto = pc.getProduto(tfProduto.getText());
@@ -301,6 +325,7 @@ public class RealizarVendaController {
         totalPagar();
         concluirVenda.setDisable(false);
         preencherLabel();
+        lbl_preco_esperado.setText("");
     }
 
     private void adicionarListaCarrinho(){
@@ -343,7 +368,6 @@ public class RealizarVendaController {
         }
     }
 
-
     private void totalPagar(){
         float totalApagar = 0;
 
@@ -385,6 +409,36 @@ public class RealizarVendaController {
             carrinho.add(new Venda(pc.getProduto(produtoTB.nome.getValue()),
                     factura, produtoTB.getQuantidade()));
         }
+    }
+
+    private void removerProdutoCarrinho(){
+
+        String produtoRemover = carrinho_pnl.getSelectionModel().getSelectedItem().getValue().nome.getValue();
+        for(Venda venda: carrinho){
+            if(venda.getProduto().getNome().equalsIgnoreCase(produtoRemover)){
+                carrinho.remove(venda);
+                break;
+            }
+        }
+    }
+
+    private void eventosTabela (){
+        carrinho_pnl.setOnMousePressed(e-> pressedTime = new Date());
+
+        carrinho_pnl.setOnMouseReleased(e->{
+            timeClicked = new Date().getTime() - pressedTime.getTime();
+            if (timeClicked >= 1000) {
+               removerProdutoTabela();
+            }
+        });
+    }
+
+    private void removerProdutoTabela(){
+        produtoTBs.remove(carrinho_pnl.getSelectionModel().getSelectedItem().getValue());
+        removerProdutoCarrinho();
+        totalPagar();
+        concluirVenda.setDisable(false);
+        preencherLabel();
     }
 
 

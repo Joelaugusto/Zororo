@@ -3,6 +3,7 @@ package sample.model.modelo;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table  (name = "produto",
@@ -10,7 +11,7 @@ import java.util.Objects;
                 name = "uk_nome_cotegoria",
         columnNames = {
                 "nome",
-                "categoria_id"
+                "categoria_id",  "unidade_id",
         }
 ))
 public class Produto {
@@ -37,9 +38,21 @@ public class Produto {
     )
     private Categoria categoria;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "unidade_id",
+            foreignKey = @ForeignKey(name = "fk_unidade_id")
+    )
+    private Unidade unidade;
+
     @Id
     @GeneratedValue
     private int id;
+
+
+    @OneToMany
+    @JoinColumn(name="produto_id")
+    private Set<Venda> venda;
 
     public Produto(String nome, float valor, float precoCaixa, short unidadesPorCaixa, int stock) {
         super();
@@ -78,9 +91,9 @@ public class Produto {
         this.valor = valor;
     }
 
-    /*public float getPrecoCaixa() {
+    public float getPrecoCaixa() {
         return precoCaixa;
-    }*/
+    }
 
     public void setPrecoCaixa(float precoCaixa) {
         this.precoCaixa = precoCaixa;
@@ -133,8 +146,19 @@ public class Produto {
                 ", valor=" + valor +
                 ", precoCaixa=" + precoCaixa +
                 ", unidadesPorCaixa=" + unidadesPorCaixa +
+                ", stock=" + stock +
                 ", categoria=" + categoria +
+                ", unidade=" + unidade +
                 ", id=" + id +
+                ", venda=" + venda +
                 '}';
+    }
+
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
     }
 }

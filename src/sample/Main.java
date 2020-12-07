@@ -16,7 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        final DataBaseServer dataBaseServer = new DataBaseServer();
+        //final DataBaseServer dataBaseServer = new DataBaseServer();
 
         //janela que demostra que o programa foi aberto
         abertura(primaryStage);
@@ -25,14 +25,14 @@ public class Main extends Application {
         new ConnectionFactory().getEntityManager();
 
         //desligar o servidor quando a janela for fechada
-        primaryStage.setOnCloseRequest(e-> dataBaseServer.stop());
+        //primaryStage.setOnCloseRequest(e-> dataBaseServer.stop());
 
         //iniciar o servidor de base de dados (MySQL)
-        dataBaseServer.start();
+        //dataBaseServer.start();
 
         janelaPrincipal(primaryStage);
 
-        new FicheirosBat().save();
+        //new FicheirosBat().save();
     }
 
     private void abertura(Stage primaryStage) throws IOException {

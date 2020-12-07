@@ -30,10 +30,11 @@ public class Factura {
         this.id = id;
     }
 
-    /*public Date getData() {
+    public Date getData() {
         return data;
     }
 
+    /*
     public void setData(Date data) {
         this.data = data;
     }*/

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="980.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ui.RegistroController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="980.0" style="-fx-background-color: #fff;">
+         <children>
+            <Label layoutX="333.0" layoutY="71.0" prefHeight="37.0" prefWidth="315.0" text="Registrar Novo Produto" textFill="#4d4d4d">
+               <font>
+                  <Font name="Segoe UI" size="30.0" />
+               </font>
+            </Label>
+            <JFXTextField id="1" fx:id="nomeProduto" labelFloat="true" layoutX="138.0" layoutY="188.0" prefHeight="35.0" prefWidth="357.0" promptText="Nome Produto" style="-fx-background-color: #fff;">
+               <font>
+                  <Font name="Segoe UI" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField id="2" fx:id="preco" labelFloat="true" layoutX="144.0" layoutY="281.0" prefHeight="38.0" prefWidth="129.0" promptText="Preco" style="-fx-background-color: #fff;">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </JFXTextField>
+            <JFXButton fx:id="btnRegistro" buttonType="RAISED" layoutX="407.0" layoutY="429.0" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #EBECF0;" text="Registrar" textFill="#0052cc">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="99.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/icons/icons8_soda_bottle_24px.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="99.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/icons/icons8_price_24px.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="566.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/icons/icons8_estimates_24px.png" />
+               </image>
+            </ImageView>
+            <JFXTextField id="2" fx:id="precoCaixa" labelFloat="true" layoutX="365.0" layoutY="283.0" prefHeight="38.0" prefWidth="129.0" promptText="Preco compra" style="-fx-background-color: #fff;">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </JFXTextField>
+            <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="320.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/icons/icons8_cost_24px_1.png" />
+               </image>
+            </ImageView>
+            <StackPane fx:id="pane1" layoutX="591.0" layoutY="354.0" prefHeight="150.0" prefWidth="381.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="599.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="352.0" />
+            <Label fx:id="lblLucro" layoutX="612.0" layoutY="206.0" prefHeight="35.0" prefWidth="227.0" style="-fx-background-color: #fff;" text="Lucro : 0.00MT" textFill="#4d4d4d">
+               <font>
+                  <Font name="Segoe UI" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="566.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/icons/icons8_profit_24px.png" />
+               </image>
+            </ImageView>
+            <JFXComboBox fx:id="categoria" labelFloat="true" layoutX="612.0" layoutY="136.0" prefHeight="35.0" prefWidth="227.0" promptText="Categoria" style="-fx-background-color: #fff;" />
+            <ImageView fitHeight="37.0" fitWidth="47.0" layoutX="566.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/icons/category.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="notificacao" layoutX="136.0" layoutY="232.0" prefHeight="21.0" prefWidth="357.0" style="-fx-background-color: #fff;" textFill="#2327e4">
+               <font>
+                  <Font name="Segoe UI" size="12.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="categoria1" labelFloat="true" layoutX="619.0" layoutY="284.0" prefHeight="35.0" prefWidth="129.0" promptText="Unidade" style="-fx-background-color: #fff;" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

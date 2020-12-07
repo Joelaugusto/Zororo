@@ -5,6 +5,8 @@ import sample.model.modelo.Venda;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class VendaDAO {
 
@@ -48,6 +50,78 @@ public class VendaDAO {
         }finally {
             entityManager.close();
         }
+    }
+
+    public List<Venda> findAll(){
+        EntityManager entityManager = new ConnectionFactory().getEntityManager();
+        List<Venda> vendas = null;
+
+        try{
+            vendas = entityManager.createQuery("from Venda v").getResultList();
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }finally {
+            entityManager.close();
+        }
+        return vendas;
+    }
+
+    public List<Venda> findById(int id){
+        EntityManager entityManager = new ConnectionFactory().getEntityManager();
+        List<Venda> vendas = null;
+
+        try{
+            vendas = entityManager.createQuery("from Venda v where id_factura = "+id).getResultList();
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }finally {
+            entityManager.close();
+        }
+        return vendas;
+    }
+
+    public List<Venda> findByDate(String date){
+        EntityManager entityManager = new ConnectionFactory().getEntityManager();
+        List<Venda> vendas = null;
+
+        try{
+            vendas = entityManager.createQuery("from Venda v where cast(dataVenda = "+date+") ").getResultList();
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }finally {
+            entityManager.close();
+        }
+        return vendas;
+    }
+
+    public List findWithFactura(Date data){
+        EntityManager entityManager = new ConnectionFactory().getEntityManager();
+        List vendas = null;
+
+        try{
+            vendas = entityManager.createQuery("from Venda v where data = '"+
+                    data.toString()+"'").getResultList(); //não é o melhor jeito
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }finally {
+            entityManager.close();
+        }
+        return vendas;
+    }
+
+    public List<Object[]> quantidadeVendida(){
+        EntityManager entityManager = new ConnectionFactory().getEntityManager();
+        List <Object[]>produtosVendidos = null;
+
+        try{
+            produtosVendidos = entityManager.createQuery("select v.produto.id, v.produto.nome, v.produto.valor, v.produto.precoCaixa,v.produto.unidadesPorCaixa, sum(v.quantidadeVendida) as quantidade from " +
+                    "Venda v  group by v.produto.id").getResultList();
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }finally {
+            entityManager.close();
+        }
+        return produtosVendidos;
     }
 
     /*

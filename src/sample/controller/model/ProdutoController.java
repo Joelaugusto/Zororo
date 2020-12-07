@@ -3,6 +3,7 @@ package sample.controller.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.model.DAO.ProdutoDAO;
+import sample.model.DAO.UnidadeDAO;
 import sample.model.modelo.Produto;
 
 import java.util.List;
@@ -17,7 +18,6 @@ public class ProdutoController {
     }
 
     public void registrarProduto(Produto produto){
-        System.out.println(produto);
         produtoDAO.save(produto);
     }
 
@@ -26,6 +26,7 @@ public class ProdutoController {
     }
 
     public boolean verificarExistencia(String nome){
+        UnidadeDAO unidadeDAO = new UnidadeDAO();
         return !produtoDAO.findByName(nome).isEmpty();
         // se a lista estiver vazia significa que nao ha nenhum registro com mesmo nome
     }

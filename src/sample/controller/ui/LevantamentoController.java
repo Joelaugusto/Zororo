@@ -7,18 +7,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import sample.controller.model.ProdutoController;
+import sample.controller.model.UnidadeControleer;
 import sample.model.modelo.Produto;
+import sample.model.modelo.Unidade;
 import sample.util.Conversao;
+import sample.util.TextUtil;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LevantamentoController implements Initializable {
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private JFXTextField tfQuantidade;
@@ -44,9 +42,12 @@ public class LevantamentoController implements Initializable {
     @FXML
     private JFXRadioButton rbAdicionarCaixa;
 
-    private ProdutoController pc;
+    private final ProdutoController pc  = new ProdutoController();
+    private final Conversao conversao = new Conversao();
+    private final TextUtil textUtil = new TextUtil();
+    private final UnidadeControleer unidadeControleer = new UnidadeControleer();
     private Produto produto;
-    private Conversao conversao;
+
 
     @FXML
     void initialize() {
@@ -54,16 +55,13 @@ public class LevantamentoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        pc = new ProdutoController();
-        produto = new Produto();
-        conversao = new Conversao();
-
 
         preencherCB();
         rbAdicionarCaixa.setOnAction(this::ativarDesativarRb);
         rbAdicionarUnidade.setOnAction(this::ativarDesativarRb);
         cbListaProdutos.setOnAction(e->selecionarProduto());
         tfQuantidade.setOnKeyTyped(this::validarTF);
+        tfQuantidade.textProperty().addListener(textUtil.apenasDigitoInt(tfQuantidade));
         btnAtualizarStock.setOnAction(e->atualizarStock());
         btnAtualizarStock.setDisable(true);
 
@@ -93,6 +91,7 @@ public class LevantamentoController implements Initializable {
             rbAdicionarUnidade.setSelected(true);
         }
     }
+
     private void preencherCB(){
         cbListaProdutos.setItems(pc.findAllNomeProduto());
         cbListaProdutos.getSelectionModel().selectFirst();//seleciona o primeiro produto
@@ -110,17 +109,35 @@ public class LevantamentoController implements Initializable {
     private void preencherCampos(){
         String selected = cbListaProdutos.getSelectionModel().getSelectedItem();
         produto = pc.getProduto(selected);
-        lblNomeProduto.setText(produto.getNome());
+        Unidade unidade = unidadeControleer.getByProdutoId(produto.getId());
+        rbAdicionarCaixa.setText("Adicionar "+unidade.getUnidade());
+        rbAdicionarUnidade.setVisible(unidade.isPermiteQuantidade());
+
+
+
+        rbAdicionarUnidade.setVisible(true);
+        if(unidade.isPermiteQuantidade()){
+            rbAdicionarCaixa.setVisible(true);
+            rbAdicionarUnidade.setText("Adicionar por unidade");
+        }else{
+            rbAdicionarCaixa.setVisible(false);
+            rbAdicionarUnidade.setText("Adicionar em "+unidade.getUnidade());
+            rbAdicionarUnidade.setSelected(true);
+            rbAdicionarCaixa.setSelected(false);
+        }
+
+        lblNomeProduto.setText("Produto : "+produto.getNome());
 
 
         if(produto.getStock()%produto.getUnidadesPorCaixa()==0){
-            lblStock.setText("Stock : "+produto.getStock()/produto.getUnidadesPorCaixa() + " Caixas");
+            lblStock.setText("Stock : "+produto.getStock()/produto.getUnidadesPorCaixa()
+                    + " "+unidade.getUnidade());
         }else{
             if(produto.getStock()<produto.getUnidadesPorCaixa()){
-                lblStock.setText("Stock : "+produto.getStock()+ " Unidades");
+                lblStock.setText("Stock : "+unidade.getUnidade()+" "+ produto.getStock()+ " Unidades");
             }else{
-               lblStock.setText("Stock : "+produto.getStock()/produto.getUnidadesPorCaixa()+
-                        " Caixas e "+produto.getStock()%produto.getUnidadesPorCaixa()+" Unidades");
+               lblStock.setText("Stock : "+produto.getStock()/produto.getUnidadesPorCaixa()+" "+
+                        unidade.getUnidade()+ " " +produto.getStock()%produto.getUnidadesPorCaixa()+" Unidades");
             }
         }
 
