@@ -1,2 +1,2 @@
 # Zororo
- Projecto para estabelecimento comercial de vendas
+ Projecto de vendas para um estabelecimento comercial
